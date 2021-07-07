@@ -27,7 +27,7 @@ public class MemberRepositoryTests {
         IntStream.rangeClosed(1, 100).forEach(i -> {
             Member member = Member.builder()
                     .email("user" + i + "@aaa.com")
-                    .mpw(passwordEncoder.encode("11111"))
+                    .mpw(passwordEncoder.encode("111"))
                     .mname("USER" + i)
                     .build();
             // 회원만들고 비번에 패스워드 인코더 1111로 건상태

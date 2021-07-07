@@ -1,16 +1,15 @@
 package org.zerock.j09;
 
-import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.AntPathMatcher;
+import org.zerock.j09.user.secyrity.utill.JWTUtill;
 
 @SpringBootTest
 @ActiveProfiles("dev")
-@Log4j2
 class J09ApplicationTests {
 
     @Autowired
@@ -18,6 +17,35 @@ class J09ApplicationTests {
 
     @Test
     void contextLoads() {
+    }
+    //1
+
+    @Test
+    public void testCreateJWT()throws Exception{
+
+        String email ="user88@aaa.com";
+
+        String result = new JWTUtill().generateToken(email);
+
+        System.out.println(result);
+
+
+    }
+    //2
+
+    @Test
+    public void testValidate() throws Exception{
+        String str = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjU2NDAzNzcsImV4cCI6MTYyODIzMjM3Nywic3ViIjoidXNlcjg4QGFhYS5jb20ifQ.p7Hr1J_rQdffuhtj1X1f90OCZiNYjwsujO-YHtLPHFo";
+
+        System.out.println(new JWTUtill().validateAndExtract(str));
+    }
+
+    @Test
+    public void testMatch(){
+        String pattern = "/api/board/**/*";
+        AntPathMatcher matcher = new AntPathMatcher();
+
+        System.out.println(matcher.match(pattern,"/api/board/read/123"));
     }
 
     @Test
@@ -30,14 +58,4 @@ class J09ApplicationTests {
         System.out.println(passwordEncoder.matches("1111",enStr));
 
     }
-
-    @Test
-    public void testNatch() {
-
-        String patten = "/api/board/**/*";
-        AntPathMatcher matcher = new AntPathMatcher();
-        log.info(matcher.match(patten,"/api/board/read/123"));
-        // 앤트패턴
-    }
-
 }

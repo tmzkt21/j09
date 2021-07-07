@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.zerock.j09.user.secyrity.CustomAccessDeniedHandler;
 import org.zerock.j09.user.secyrity.filter.ApiCheckFilter;
 import org.zerock.j09.user.secyrity.filter.ApiLoginFilter;
+import org.zerock.j09.user.secyrity.handler.LoginFailHandler;
 
 @Configuration
 @Log4j2
@@ -45,7 +46,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public ApiLoginFilter apiLoginFilter() throws Exception {
-        return new ApiLoginFilter("/login", authenticationManager());
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/login", authenticationManager());
+        //"/login" 이런 경로값을 상수로 뺴야합니다
+        apiLoginFilter.setAuthenticationFailureHandler(new LoginFailHandler());
+        return apiLoginFilter;
     }
 
 
